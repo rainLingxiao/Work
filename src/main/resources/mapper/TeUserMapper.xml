@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.rain.mapping.TeUserMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.rain.pojo.TeUser" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="rname" property="rname" jdbcType="VARCHAR" />
+    <result column="telno" property="telno" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, rname, telno, memo, address
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from te_user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from te_user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cn.rain.pojo.TeUser" >
+    insert into te_user (id, rname, telno, 
+      memo, address)
+    values (#{id,jdbcType=VARCHAR}, #{rname,jdbcType=VARCHAR}, #{telno,jdbcType=VARCHAR}, 
+      #{memo,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.rain.pojo.TeUser" >
+    insert into te_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="rname != null" >
+        rname,
+      </if>
+      <if test="telno != null" >
+        telno,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="rname != null" >
+        #{rname,jdbcType=VARCHAR},
+      </if>
+      <if test="telno != null" >
+        #{telno,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.rain.pojo.TeUser" >
+    update te_user
+    <set >
+      <if test="rname != null" >
+        rname = #{rname,jdbcType=VARCHAR},
+      </if>
+      <if test="telno != null" >
+        telno = #{telno,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.rain.pojo.TeUser" >
+    update te_user
+    set rname = #{rname,jdbcType=VARCHAR},
+      telno = #{telno,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
