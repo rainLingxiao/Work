@@ -175,7 +175,7 @@
                 </a>
             </li>            
             <li>
-                <a href="/user/showUser.do?id=1">
+                <a href="/user/showUser.do">
                     <i class="icon-signal"></i>
                     <span>Charts</span>
                 </a>
@@ -187,7 +187,7 @@
                     <i class="icon-chevron-down"></i>
                 </a>
                 <ul class="submenu">
-                    <li><a href="user-list.html">User list</a></li>
+                    <li><a href="/user/showUser.do">User list</a></li>
                     <li><a href="new-user.html">New user form</a></li>
                     <li><a href="user-profile.html">User profile</a></li>
                 </ul>

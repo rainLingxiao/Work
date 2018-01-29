@@ -21,4 +21,11 @@ public class InnerTeUserService {
     public TeUser queryTeUserById(TeUser teUser){
         return teUserMapper.selectByPrimaryKey(teUser.getId());
     }
+
+    /*
+     * 获取用户信息列表
+     */
+    public List<TeUser> queryTeUserList(TeUser teUser){
+        return teUserMapper.queryTeUserList(teUser);
+    }
 }

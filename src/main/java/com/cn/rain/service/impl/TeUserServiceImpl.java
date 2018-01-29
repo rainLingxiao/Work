@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by rain on 2018/1/17.
  */
@@ -18,5 +20,9 @@ public class TeUserServiceImpl implements TeUserService {
 
     public TeUser queryTeUserById(TeUser teUser) {
         return teUserManager.queryTeUserById(teUser);
+    }
+
+    public List<TeUser> queryTeUserList(TeUser teUser) {
+        return teUserManager.queryTeUserList(teUser);
     }
 }

@@ -2,6 +2,8 @@ package com.cn.rain.mapping;
 
 import com.cn.rain.pojo.TeUser;
 
+import java.util.List;
+
 public interface TeUserMapper {
     int deleteByPrimaryKey(String id);
 
@@ -14,4 +16,6 @@ public interface TeUserMapper {
     int updateByPrimaryKeySelective(TeUser record);
 
     int updateByPrimaryKey(TeUser record);
+
+    List<TeUser> queryTeUserList(TeUser teUser);
 }

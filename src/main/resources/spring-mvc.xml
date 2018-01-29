@@ -30,7 +30,7 @@
         </property>
     </bean>
     <!-- 定义跳转的文件的前后缀 ，视图模式配置-->
-    <!--<mvc:resources mapping="/resources/**" location="/resources/"></mvc:resources>-->
+    <!--<mvc:resources mapping="/WEB-INF/**" location="/WEB-INF/"></mvc:resources>-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->
         <property name="prefix" value="/WEB-INF/jsp/" />
@@ -48,4 +48,8 @@
         <property name="maxInMemorySize" value="40960" />
     </bean>
 
+    <!-- 加载所有配置文件 -->
+    <context:property-placeholder location="classpath*:*.properties"/>
+
+    <import resource="spring-data-redis.xml"/>
 </beans>

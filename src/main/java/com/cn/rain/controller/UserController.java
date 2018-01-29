@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by rain on 2018/1/17.
@@ -21,9 +22,8 @@ public class UserController {
     @RequestMapping("/showUser")
     public String showUser(HttpServletRequest request,Model model){
         TeUser user = new TeUser();
-        user.setId(request.getParameter("id"));
-        TeUser teUser = teUserService.queryTeUserById(user);
-        model.addAttribute("user", teUser);
-        return "showUser";
+        List<TeUser> teUserList = teUserService.queryTeUserList(user);
+        model.addAttribute("teUserList", teUserList);
+        return "userList";
     }
 }
