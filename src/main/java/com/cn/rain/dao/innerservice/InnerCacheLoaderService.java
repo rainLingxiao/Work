@@ -1,0 +1,44 @@
+package com.cn.rain.dao.innerservice;
+
+import com.cn.rain.mapping.TeUserMapper;
+import com.cn.rain.pojo.TeUser;
+import com.cn.rain.util.RedisComponent;
+import com.google.common.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: lingxiao
+ * Date: 2018/1/29
+ * Time: 16:12
+ * To change this template use File | Settings | File Templates.
+ */
+@Component
+@Slf4j
+public class InnerCacheLoaderService {
+    @Autowired(required = false)
+    private RedisComponent redisComponent;
+    @Autowired(required = false)
+    private ThreadPoolTaskExecutor makeCardThreadPool;
+    @Autowired
+    private TeUserMapper teUserMapper;
+
+    public void loadCache(){
+        Runnable r = () -> {
+            TeUser teUser = new TeUser();
+            Map<String, String> userMap = Maps.newHashMap();
+            List<TeUser> userList = teUserMapper.queryTeUserList(teUser);
+            for (TeUser user : userList) {
+                userMap.put(user.getId() , user.getRname());
+            }
+            redisComponent.setHashMap("userMap",userMap);
+        };
+        makeCardThreadPool.execute(r);
+    }
+}
