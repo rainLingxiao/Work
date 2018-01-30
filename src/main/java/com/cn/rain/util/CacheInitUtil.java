@@ -15,15 +15,20 @@ import org.springframework.stereotype.Component;
  * To change this template use File | Settings | File Templates.
  */
 @Slf4j
-@SuppressWarnings("rawtypes")
 @Component
 public class CacheInitUtil implements ApplicationListener{
+    // 是否已执行  执行后修改为true 避免多次执行
+    private static boolean isStart = false;
     @Autowired
     private CacheLocalManager cacheLocdalManager;
 
     @Override
     public void onApplicationEvent(ApplicationEvent event) {
-        System.out.println("\\n\\n\\n_________\\n\\n this is test medo \\n\\n ________\\n\\n\\n\\n");
-        cacheLocdalManager.loadCache();
+        if (!isStart) {
+            isStart = true;
+            log.info("=======this is begin=======");
+//            cacheLocdalManager.loadCache();
+            log.info("=======this is over=======");
+        }
     }
 }

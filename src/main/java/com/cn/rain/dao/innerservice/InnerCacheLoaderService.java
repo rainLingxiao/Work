@@ -2,7 +2,6 @@ package com.cn.rain.dao.innerservice;
 
 import com.cn.rain.mapping.TeUserMapper;
 import com.cn.rain.pojo.TeUser;
-import com.cn.rain.util.RedisComponent;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +21,48 @@ import java.util.Map;
 @Component
 @Slf4j
 public class InnerCacheLoaderService {
-    @Autowired(required = false)
-    private RedisComponent redisComponent;
+//    @Autowired
+//    private RedisComponent redisComponent;
     @Autowired(required = false)
     private ThreadPoolTaskExecutor makeCardThreadPool;
     @Autowired
     private TeUserMapper teUserMapper;
 
-    public void loadCache(){
+
+    public void loadCache() {
+        System.out.println("start of loadcache");
         Runnable r = () -> {
-            TeUser teUser = new TeUser();
-            Map<String, String> userMap = Maps.newHashMap();
-            List<TeUser> userList = teUserMapper.queryTeUserList(teUser);
-            for (TeUser user : userList) {
-                userMap.put(user.getId() , user.getRname());
+            // 当前时间毫秒数作为版本号
+            String version = String.valueOf(System.currentTimeMillis());
+            Map<String, String> nameAndCode = Maps.newHashMap();
+            Map<String, String> merchantNameMap = Maps.newHashMap();
+            nameAndCode.put("version", version);
+            merchantNameMap.put("version", version);
+            List<TeUser> users = teUserMapper.queryTeUserList(new TeUser());
+            for (TeUser user : users) {
+                merchantNameMap.put(user.getId(), user.getRname());
             }
-            redisComponent.setHashMap("userMap",userMap);
+            //删除原有数据
+            log.info("移除姓名-姓名缓存！");
+//            redisComponent.removeRedis("cache_user");
+            log.info("存储姓名-姓名缓存！");
+//            redisComponent.setRedis("cache_user", merchantNameMap);
+            log.info("加载客户缓存数据结束！");
         };
         makeCardThreadPool.execute(r);
     }
+
+
+//    public void loadCache(){
+//        Runnable r = () -> {
+//            TeUser teUser = new TeUser();
+//            Map<String, String> userMap = Maps.newHashMap();
+//            List<TeUser> userList = teUserMapper.queryTeUserList(teUser);
+//            for (TeUser user : userList) {
+//                userMap.put(user.getId() , user.getRname());
+//            }
+//            redisComponent.setRedis("userMap",userMap);
+//        };
+//        makeCardThreadPool.execute(r);
+//    }
 }
