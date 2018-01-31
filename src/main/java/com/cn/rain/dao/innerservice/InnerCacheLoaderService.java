@@ -2,6 +2,7 @@ package com.cn.rain.dao.innerservice;
 
 import com.cn.rain.mapping.TeUserMapper;
 import com.cn.rain.pojo.TeUser;
+import com.cn.rain.util.RedisComponentUtil;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,8 @@ import java.util.Map;
 @Component
 @Slf4j
 public class InnerCacheLoaderService {
-//    @Autowired
-//    private RedisComponent redisComponent;
+    @Autowired
+    private RedisComponentUtil redisComponentUtil;
     @Autowired(required = false)
     private ThreadPoolTaskExecutor makeCardThreadPool;
     @Autowired
@@ -44,25 +45,12 @@ public class InnerCacheLoaderService {
             }
             //删除原有数据
             log.info("移除姓名-姓名缓存！");
-//            redisComponent.removeRedis("cache_user");
+            redisComponentUtil.removeRedis("cache_user");
             log.info("存储姓名-姓名缓存！");
-//            redisComponent.setRedis("cache_user", merchantNameMap);
+            redisComponentUtil.setRedis("cache_user", merchantNameMap);
             log.info("加载客户缓存数据结束！");
         };
         makeCardThreadPool.execute(r);
     }
 
-
-//    public void loadCache(){
-//        Runnable r = () -> {
-//            TeUser teUser = new TeUser();
-//            Map<String, String> userMap = Maps.newHashMap();
-//            List<TeUser> userList = teUserMapper.queryTeUserList(teUser);
-//            for (TeUser user : userList) {
-//                userMap.put(user.getId() , user.getRname());
-//            }
-//            redisComponent.setRedis("userMap",userMap);
-//        };
-//        makeCardThreadPool.execute(r);
-//    }
 }

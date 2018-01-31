@@ -54,5 +54,6 @@
 
     <tx:annotation-driven transaction-manager="transactionManager" />
     <import resource="classpath*:spring-data-redis.xml"/>
+    <import resource="classpath:thread-pool.xml" />
 
 </beans>

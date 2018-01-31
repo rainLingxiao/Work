@@ -27,7 +27,7 @@ public class CacheInitUtil implements ApplicationListener{
         if (!isStart) {
             isStart = true;
             log.info("=======this is begin=======");
-//            cacheLocdalManager.loadCache();
+            cacheLocdalManager.loadCache();
             log.info("=======this is over=======");
         }
     }
