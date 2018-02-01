@@ -23,7 +23,4 @@
         <property name="suffix" value=".jsp" />
     </bean>
 
-    <!-- 加载所有配置文件 -->
-    <!--<context:property-placeholder location="classpath*:*.properties"/>-->
-
 </beans>
