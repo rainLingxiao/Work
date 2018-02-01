@@ -4,6 +4,13 @@
        xsi:schemaLocation="
 			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- 引入配置文件 -->
+    <bean id="redisConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value = "classpath:redis.properties"/>
+
+    </bean>
+
+
     <!-- redis连接池 -->
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig" p:minIdle="${redis.minIdle}"
           p:maxIdle="${redis.maxIdle}" p:maxTotal="${redis.maxActive}"
@@ -17,7 +24,7 @@
         <property name="port" value="${redis.sentinel.port01}"/>
         <property name="timeout" value="${redis.timeout}"/>
         <!--<constructor-arg index="0" ref="redisSentinelConfiguration"></constructor-arg>-->
-        <!--<constructor-arg index="1" ref="jedisPoolConfig"></constructor-arg>-->
+        <constructor-arg ref="jedisPoolConfig"></constructor-arg>
     </bean>
 
     <!-- redisTemplate类 -->
